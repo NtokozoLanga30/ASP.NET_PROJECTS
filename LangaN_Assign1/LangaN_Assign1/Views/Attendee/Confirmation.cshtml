@@ -1,0 +1,21 @@
+﻿@model Event
+@{ 
+     ViewData["Title"] = "Confirmation"; 
+ }
+
+<h1>Thank You for Registering!</h1>
+<hr />
+ <partial name="_EventDetails" model="@Model"/> 
+  @ViewData["Title"]
+<p>
+    <strong>List of attendees:</strong>
+    <br />
+    @foreach (var item in Model.Attendees)
+    {
+        <div>@item.AttendeeName (@item.AttendeeEmail)</div> @* Attendee details *@
+    }
+</p>
+
+<p>
+    <a asp-action="Index" asp-controller="Event" class="btn btn-primary">Return to Home Page</a>
+</p>

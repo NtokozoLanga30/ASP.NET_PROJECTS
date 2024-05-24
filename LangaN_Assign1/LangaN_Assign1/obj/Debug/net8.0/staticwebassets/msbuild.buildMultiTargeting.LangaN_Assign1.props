@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\LangaN_Assign1.props" />
+</Project>
