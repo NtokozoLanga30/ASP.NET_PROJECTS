@@ -1,0 +1,23 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Edit Book page";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="BookId" />
+
+    <partial name="_AddEditBookPartialView" model="@Model"/>
+  
+    <div>
+        <br />
+        <input type="submit" value="Update" class="btn btn-primary"/>
+        <button asp-action="List" asp-controller="Book"
+                class="btn btn-outline-secondary">
+            Cancel
+        </button>
+    </div>
+</form>

@@ -1,0 +1,115 @@
+﻿@{
+    string controller =
+        ViewContext.RouteData.Values["controller"].ToString();
+    string action =
+        ViewContext.RouteData.Values["action"].ToString();
+}
+<!DOCTYPE html>
+<!--N, Langa & 2020932014-->
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link asp-href-include="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link asp-href-include="/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link asp-href-include="/styles/custom.css" rel="stylesheet" />
+</head>
+<body class="container-fluid">
+    <div id="Menu">
+        <div class="navbar navbar-expand-md bg-dark navbar-dark border border-primary">
+
+            <!-- Brand  ComptScienceBooks -->
+            <a class="navbar-brand">
+                <img src="~/images/compsciencebookslogo.png" height="30px" width="100px"/>
+            </a>
+            <!-- Toggler/collapsible Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#MyNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Links -->
+            <div class="collapse navbar-collapse" id="MyNavbar">
+                <ul class="navbar-nav ">
+                    <li class="nav-item">
+                        <a class="nav-link 
+                            @(controller == "Home" && action == "Index" ? "active fw-bold text-decoration-underline" : "")"
+                            asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+
+                    <li class=" nav-item dropdown">
+                        <a class="nav-link 
+                            @(controller == "Category" ? "active fw-bold text-decoration-underline" : "")"
+                                 data-bs-toggle="dropdown">Categories</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" asp-controller="Category" asp-action="Artificial">Artificial</a>
+                            <a class="dropdown-item" asp-controller="Category" asp-action="Machine">Machine</a>
+                            <a class="dropdown-item" asp-controller="Category" asp-action="Programming">Programming</a>
+                            <a class="dropdown-item" asp-controller="Category" asp-action="Security">Security</a>
+                            <a class="dropdown-item" asp-controller="Category" asp-action="Software">Software</a>
+                        </div>
+                    </li>
+                    @if(User.Identity.IsAuthenticated)
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link
+                            @(controller == "Book" && action == "List" ? "active fw-bold text-decoration-underline" : "")"
+                               asp-controller="Book" asp-action="List">Books</a>
+                        </li>
+                    }
+                   
+                    <li class="nav-item">
+                        <a class="nav-link  
+                            @(controller == "Home" && action == "About" ? "active fw-bold text-decoration-underline" : "")" 
+                                asp-controller="Home" asp-action="About">About</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-link">Hello, @User.Identity.Name</li>
+                            <li class="nav-item">
+                                <form asp-action="Logout" asp-controller="Account" method="post">
+                                    <button class="btn btn-link nav-link" type="submit">Log Out</button>
+                                </form>
+                            </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                        <a class="nav-link  @(controller == "Account" && action == "Register" ? "active fw-bold text-decoration-underline" : "")
+                                " asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link @(controller == "Account" && action == "Login" ? "active fw-bold text-decoration-underline" : "")
+                             " asp-controller="Account" asp-action="Login">Log in</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <!-- **** Footer section **** -->
+    <div>
+        <br />
+        <div class="bg-dark text-light text-uppercase text-center">
+            <!-- Replace text below with your own Initials. Surname (Student no.)-->
+            <div>
+                Created by: N. Langa (2020932014) <br />
+                &copy; 2024 ComptScienceBooks
+                - All rights reserved
+            </div>
+        </div>
+        <br />
+    </div>
+    <!-- Footer end-->
+    @*Bootstrap JavaScript*@
+    <script asp-src-include="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

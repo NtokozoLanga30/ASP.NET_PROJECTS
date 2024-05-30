@@ -1,0 +1,78 @@
+﻿@model BookListViewModel
+@{
+    @* Add Title *@
+    ViewData["Title"] = "Books page";
+}
+
+<h2 class="text-center">List of books</h2>
+<div>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-secondary alert-dismissible" role="alert">
+            <button type="button" class="btn-close"
+                    data-bs-dismiss="alert" aria-label="Close">
+            </button>
+            @TempData["Message"]
+        </div>
+    }
+</div>
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Add" asp-controller="Book" role="link">Add New Book</a>
+    }
+</p>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="List"
+                   asp-route-sortBy="@ViewData["NameSortParam"]">
+                    BookName@* Book Name *@
+                </a>
+            </th>
+            <th>
+                <a asp-action="List"
+                   asp-route-sortBy="@ViewData["PriceSortParam"]">
+                BookPrice@* Book Price *@
+                </a>
+            </th>
+            <th>
+                CategoryId@*Book Category*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Book b in Model.Books)
+        {
+            <tr>
+                <td>
+                   @b.BookName @* Book Name *@
+                </td>
+                <td>
+                    @b.BookPrice.ToString("C")@* Book Price *@
+                </td>
+                <td>
+                    @b.Categories.CategoryName @* Book GategoryName *@
+                </td>
+                <td>
+                    
+                    <a asp-action="Details" asp-controller="Book" asp-route-id="@b.BookId" role="link">Details</a>
+
+                    @if(User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-controller="Book" asp-route-id="@b.BookId" asp-route-Slug="@b.Slug" role="link">Edit</a>
+                        <a asp-action="Delete" asp-controller="Book" asp-route-id="@b.BookId" asp-route-Slug="@b.Slug" role="link">Delete</a>
+                    }
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div page-model="@Model.PagingInfo" page-action="List" 
+     page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>
